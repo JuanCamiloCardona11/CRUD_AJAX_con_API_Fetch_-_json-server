@@ -1,13 +1,13 @@
 const d = document,
     $table = d.querySelector(".crud-table"),
-    $form = d.querySelector(".crud-form"),
-    $title = d.querySelector(".crud-title"),
+    $form = d.querySelector(".crud__form"),
+    $title = d.querySelector(".crud__subtitle"),
     $template = d.getElementById("crud-template").content,
     $fragment = d.createDocumentFragment();
 
 const obtenerPersonas = async function(){
     try{
-        let res = await fetch("http://localhost:5555/personas"),
+        let res = await fetch("http://localhost:3000/personas"),
         json = await res.json();
 
         if(!res.ok) throw {status: res.status , statusText: res.statusText};
@@ -17,7 +17,7 @@ const obtenerPersonas = async function(){
             $template.querySelector(".cedula").textContent = elem.cedula;
             $template.querySelector(".edad").textContent = elem.edad;
             $template.querySelector(".genero").textContent = elem.genero;
-            $template.querySelector(".estatura").textContent = elem.estatura;
+            $template.querySelector(".estatura").textContent = elem.estatura/100;
             $template.querySelector(".estCivil").textContent = elem.estCivil;
 
             //PARA LOS BOTONES de editar y eliminar
@@ -68,7 +68,7 @@ d.addEventListener("submit", async e => {
                         estCivil:e.target.estCivil.value
                     })
                 }
-                let res = await fetch("http://localhost:5555/personas", options),
+                let res = await fetch("http://localhost:3000/personas", options),
                 json = await res.json();
                 if(!res.ok) throw {status: res.status , statusText: res.statusText};
                 
@@ -94,7 +94,7 @@ d.addEventListener("submit", async e => {
                         estCivil:e.target.estCivil.value
                     })
                 }
-                let res = await fetch(`http://localhost:5555/personas/${e.target.id.value}`, options),
+                let res = await fetch(`http://localhost:3000/personas/${e.target.id.value}`, options),
                 json = await res.json();
                 if(!res.ok) throw {status: res.status , statusText: res.statusText};
                 
@@ -130,7 +130,7 @@ d.addEventListener("click", async e => {
                         "Content-type": "application/json; charset=utf-8"
                     }
                 }
-                let res = await fetch(`http://localhost:5555/personas/${e.target.dataset.id}`, options),
+                let res = await fetch(`http://localhost:3000/personas/${e.target.dataset.id}`, options),
                 json = await res.json();
                 if(!res.ok) throw {status: res.status , statusText: res.statusText};
                 
